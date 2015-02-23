@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA6B5A5D1A9BAE550026996E /* YTPlayerIframeTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = BA97FC951A9148CE002CE3E5 /* YTPlayerIframeTemplate.html */; };
 		BA81429B1A7EC8AE004A1A4E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA81429A1A7EC8AE004A1A4E /* AppDelegate.swift */; };
 		BA81429D1A7EC8AE004A1A4E /* SingleVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA81429C1A7EC8AE004A1A4E /* SingleVideoViewController.swift */; };
 		BA8142A21A7EC8AE004A1A4E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA8142A01A7EC8AE004A1A4E /* Main.storyboard */; };
@@ -259,6 +260,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA6B5A5D1A9BAE550026996E /* YTPlayerIframeTemplate.html in Resources */,
 				BA8142A21A7EC8AE004A1A4E /* Main.storyboard in Resources */,
 				BA8142A71A7EC8AE004A1A4E /* LaunchScreen.xib in Resources */,
 				BA8142A41A7EC8AE004A1A4E /* Images.xcassets in Resources */,

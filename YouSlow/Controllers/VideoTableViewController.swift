@@ -39,9 +39,6 @@ class VideoTableViewController: UITableViewController, VideoListProtocol {
         dispatch_async(dispatch_get_main_queue(), {
             self.tableView.reloadData()
         })
-//        dispatch_main(
-//            self.tableView.reloadData()
-//        )
     }
 
     /*

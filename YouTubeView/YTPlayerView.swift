@@ -1,4 +1,4 @@
-//
+                                                                                                                                         //
 //  YTPlayerView.swift
 //  Demo
 //
@@ -30,11 +30,6 @@ class YTPlayerView: UIView, UIWebViewDelegate {
         super.init(frame: frame)
         loadPlayerWithOptions(nil)
     }
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//        webView?.scrollView.contentOffset = CGPointZero
-//
-//    }
 
     /*
     // Only override drawRect: if you perform custom drawing.
