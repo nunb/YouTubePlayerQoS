@@ -51,7 +51,7 @@ class YTPlayerView: UIView, UIWebViewDelegate {
             return false
         }
         var err: NSError?
-        let template = NSString(contentsOfFile: path!, encoding: NSUTF8StringEncoding, error: &err)
+        let template = NSString(contentsOfFile: path!, encoding: NSUTF8StringEncoding, error: &err) as! String
         if err != nil {
             return false
         }
@@ -93,17 +93,23 @@ class YTPlayerView: UIView, UIWebViewDelegate {
 //        println(error)
     }
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        println(request.URL.absoluteString)
-
-        if request.URL.host == originalUrl {
+        let url: NSURL
+        
+//        println(request.URL?.absoluteString)
+        
+        if request.URL == nil {
+            return false
+        }
+        url = request.URL!
+        if url.host == originalUrl {
             return true
         }
-        else if request.URL.scheme == "http" || request.URL.scheme == "https" {
-            return shouldNavigateToUrl(request.URL)
+        else if url.scheme == "http" || url.scheme == "https" {
+            return shouldNavigateToUrl(url)
         }
         
-        if request.URL.scheme == "ytplayer" {
-            delegateEvents(request.URL)
+        if url.scheme == "ytplayer" {
+            delegateEvents(url)
             return false
         }
         return true

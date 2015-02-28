@@ -28,7 +28,6 @@ class VideoList {
     var delegate: VideoListProtocol?
     
     init() {
-        
     }
     
     func isValidIndex(index: Int) -> Bool {

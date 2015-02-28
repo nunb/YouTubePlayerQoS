@@ -8,25 +8,20 @@
 
 import UIKit
 
-class YouTubeDataApi: NSObject, NSURLSessionDelegate {
+class YouTubeDataApi {
     
-    let session: NSURLSession?
+    var session: NSURLSession = NSURLSession()
     let host = "https://www.googleapis.com/youtube/v3/"
     let apiKey = "AIzaSyCQmq0XDn_UyKQtMcrKHlbVBKnWUsojqLg"
     let googleApiReferer = "app.demo.com"
     
-    private override init() {
-        super.init()
+    static let sharedInstance = YouTubeDataApi()
+    
+    private init() {
+//        super.init()
         let sessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
         sessionConfiguration.HTTPAdditionalHeaders = ["referer": googleApiReferer]
-        session = NSURLSession(configuration: sessionConfiguration, delegate: self, delegateQueue: nil)
-    }
-    
-    class var sharedInstance : YouTubeDataApi {
-        struct Static {
-            static let instance = YouTubeDataApi()
-        }
-        return Static.instance
+        session = NSURLSession(configuration: sessionConfiguration)
     }
     
     func getList(success: NSDictionary -> Void) {
@@ -38,7 +33,7 @@ class YouTubeDataApi: NSObject, NSURLSessionDelegate {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         let url = NSURL(string: "\(path)&key=\(apiKey)")
-        let task = session?.dataTaskWithURL(url!, completionHandler: {(data: NSData!, res: NSURLResponse!, err: NSError!) -> Void in
+        let task = session.dataTaskWithURL(url!, completionHandler: {(data: NSData!, res: NSURLResponse!, err: NSError!) -> Void in
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             
             if err != nil {
@@ -60,6 +55,6 @@ class YouTubeDataApi: NSObject, NSURLSessionDelegate {
             fail?(NSError(domain: "json conversion", code: 510, userInfo: nil))
         })
         
-        task?.resume()
+        task.resume()
     }
 }

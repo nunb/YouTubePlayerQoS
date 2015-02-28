@@ -25,7 +25,7 @@ class VideoTableDataSource: NSObject, UITableViewDataSource  {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("VideoListCell", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("VideoListCell", forIndexPath: indexPath) as! UITableViewCell
         let row = indexPath.row
         cell.textLabel?.text = videoList.videoTitleOfIndex(row)
         //        cell.imageView?.image =

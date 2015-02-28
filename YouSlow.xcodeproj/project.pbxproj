@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA0CC83A1AA26ABB000910E2 /* MesurementsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA0CC8391AA26ABB000910E2 /* MesurementsModel.swift */; };
 		BA6B5A5D1A9BAE550026996E /* YTPlayerIframeTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = BA97FC951A9148CE002CE3E5 /* YTPlayerIframeTemplate.html */; };
 		BA81429B1A7EC8AE004A1A4E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA81429A1A7EC8AE004A1A4E /* AppDelegate.swift */; };
 		BA81429D1A7EC8AE004A1A4E /* SingleVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA81429C1A7EC8AE004A1A4E /* SingleVideoViewController.swift */; };
@@ -46,6 +47,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		BA0CC8391AA26ABB000910E2 /* MesurementsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MesurementsModel.swift; sourceTree = "<group>"; };
 		BA8142951A7EC8AE004A1A4E /* YouSlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YouSlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA8142991A7EC8AE004A1A4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BA81429A1A7EC8AE004A1A4E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				BA8142C21A832768004A1A4E /* APIModel.swift */,
+				BA0CC8391AA26ABB000910E2 /* MesurementsModel.swift */,
 				BA8142C61A8698C3004A1A4E /* VideoModel.swift */,
 			);
 			path = Models;
@@ -286,6 +289,7 @@
 				BA97FC991A9148CE002CE3E5 /* YTPlayerView.swift in Sources */,
 				BA8142C71A8698C3004A1A4E /* VideoModel.swift in Sources */,
 				BA81429B1A7EC8AE004A1A4E /* AppDelegate.swift in Sources */,
+				BA0CC83A1AA26ABB000910E2 /* MesurementsModel.swift in Sources */,
 				BA8142C31A832768004A1A4E /* APIModel.swift in Sources */,
 				BA81429D1A7EC8AE004A1A4E /* SingleVideoViewController.swift in Sources */,
 				BA8144141A8D8688004A1A4E /* VideoTableDataSource.swift in Sources */,
@@ -364,7 +368,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -401,7 +405,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -417,7 +421,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "$(SRCROOT)/YouSlow/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = YouSlow;
 				PROVISIONING_PROFILE = "";
@@ -433,7 +437,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "$(SRCROOT)/YouSlow/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = YouSlow;
 				PROVISIONING_PROFILE = "";

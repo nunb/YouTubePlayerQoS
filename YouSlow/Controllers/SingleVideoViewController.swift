@@ -1,5 +1,5 @@
 //
-//  FirstViewController.swift
+//  SingleVideoViewController.swift
 //  Demo
 //
 //  Created by to0 on 2/1/15.
@@ -17,6 +17,9 @@ class SingleVideoViewController: UIViewController, YTPlayerDelegate, CLLocationM
     @IBOutlet var stateLabel: UILabel!
     @IBOutlet var locationLabel: UILabel!
     var locationManager: CLLocationManager = CLLocationManager()
+    var city: String?
+    var country: String?
+    var loc: String?
     
 //    required init(coder aDecoder: NSCoder) {
 //        super.init()
@@ -49,8 +52,6 @@ class SingleVideoViewController: UIViewController, YTPlayerDelegate, CLLocationM
         initLocationManager()
         playerView.delegate = self
         self.automaticallyAdjustsScrollViewInsets = false
-        // Do any additional setup after loading the view, typically from a nib.
-
     }
     override func viewWillAppear(animated: Bool) {
         
@@ -63,19 +64,21 @@ class SingleVideoViewController: UIViewController, YTPlayerDelegate, CLLocationM
     
     // Delegates
     func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if status == CLAuthorizationStatus.Authorized || status == CLAuthorizationStatus.AuthorizedWhenInUse {
+        if status == CLAuthorizationStatus.AuthorizedAlways || status == CLAuthorizationStatus.AuthorizedWhenInUse {
             locationManager.startUpdatingLocation()
         }
     }
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        locationLabel.text = "Location: \(locations)"
+        //An array of CLLocation objects. The most recent location update is at the end of the array.
+        let currentLocation = locations.last as! CLLocation
+        locationLabel.text = "Location: \(currentLocation)"
 //        println(locations)
     }
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
-        println(error)
+//        println(error)
     }
     func playerHadIframeApiReady(playerView: YTPlayerView) {
-        println("api ready")
+//        println("api ready")
     }
     func playerDidBecomeReady(playerView: YTPlayerView) {
         availableQualitiesLabel.text = "Available: " + playerView.getAvailableQualityLevelsString()!
