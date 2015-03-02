@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import CoreLocation
+import CoreTelephony
 
 class SingleVideoViewController: UIViewController, YTPlayerDelegate, CLLocationManagerDelegate {
 
@@ -16,10 +17,14 @@ class SingleVideoViewController: UIViewController, YTPlayerDelegate, CLLocationM
     @IBOutlet var availableQualitiesLabel: UILabel!
     @IBOutlet var stateLabel: UILabel!
     @IBOutlet var locationLabel: UILabel!
+    @IBOutlet var ispLabel: UILabel!
     var locationManager: CLLocationManager = CLLocationManager()
+    var telephonyInfo = CTTelephonyNetworkInfo()
+
     var city: String?
     var country: String?
     var loc: String?
+    var isp: CTCarrier?
     
 //    required init(coder aDecoder: NSCoder) {
 //        super.init()
@@ -52,14 +57,19 @@ class SingleVideoViewController: UIViewController, YTPlayerDelegate, CLLocationM
         initLocationManager()
         playerView.delegate = self
         self.automaticallyAdjustsScrollViewInsets = false
+        isp = telephonyInfo.subscriberCellularProvider
+        ispLabel.text = "ISP: \(isp?.carrierName)"
     }
-    override func viewWillAppear(animated: Bool) {
-        
-    }
+//    override func viewWillAppear(animated: Bool) {
+//        println(isp)
+//    }
    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    override func viewWillDisappear(animated: Bool) {
+        self.playerView = nil
     }
     
     // Delegates
