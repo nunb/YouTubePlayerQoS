@@ -25,14 +25,19 @@ class YouTubeDataApi {
     }
     
     func getList(success: NSDictionary -> Void) {
-        get("\(host)search?part=snippet", success: success)
+        get("\(host)search?part=snippet&key=\(apiKey)", success: success)
+    }
+    
+    func getNetworkInfo(success: NSDictionary -> Void) {
+        get("http://ip-api.com/json/", success: success)
     }
     
     private func get(path: String, success: (NSDictionary) -> Void, fail: ((NSError) -> Void)? = nil) {
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        let url = NSURL(string: "\(path)&key=\(apiKey)")
+        let url = NSURL(string: path)
+
         let task = session.dataTaskWithURL(url!, completionHandler: {(data: NSData!, res: NSURLResponse!, err: NSError!) -> Void in
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             
@@ -43,13 +48,17 @@ class YouTubeDataApi {
                 }
                 return
             }
+            println(data)
             var jsonErr: NSError?
-            let jsonObject: AnyObject! = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonErr)
+            let jsonObject: AnyObject! = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers | NSJSONReadingOptions.AllowFragments, error: &jsonErr)
             if jsonErr == nil {
                 if let json = jsonObject as? NSDictionary  {
                     success(json)
                     return
                 }
+            }
+            else {
+                println(jsonErr)
             }
             // Json Conversion Error
             fail?(NSError(domain: "json conversion", code: 510, userInfo: nil))

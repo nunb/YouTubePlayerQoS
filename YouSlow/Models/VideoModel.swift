@@ -10,6 +10,7 @@ import Foundation
 
 protocol VideoListProtocol {
     func didReloadVideoData()
+//    func didGetCurrentISP()
 }
 
 private class VideoItem  {
@@ -74,4 +75,6 @@ class VideoList {
             self.delegate?.didReloadVideoData()
         })
     }
+//    func requestCurrentISP() {
+//            }
 }
