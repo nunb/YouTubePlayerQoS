@@ -7,9 +7,8 @@
 //
 import Foundation
 import UIKit
-import CoreLocation
 
-class SingleVideoViewController: UIViewController, YTPlayerDelegate, CLLocationManagerDelegate {
+class SingleVideoViewController: UIViewController, YTPlayerDelegate {
 
     @IBOutlet var playerView: YTPlayerView!
     @IBOutlet var qualityLabel: UILabel!
@@ -17,7 +16,6 @@ class SingleVideoViewController: UIViewController, YTPlayerDelegate, CLLocationM
     @IBOutlet var stateLabel: UILabel!
     @IBOutlet var locationLabel: UILabel!
     @IBOutlet var ispLabel: UILabel!
-    var locationManager: CLLocationManager = CLLocationManager()
     var measurements = Measurements()
     
 //    required init(coder aDecoder: NSCoder) {
@@ -34,21 +32,8 @@ class SingleVideoViewController: UIViewController, YTPlayerDelegate, CLLocationM
 //        initLocationManager()
 //    }
     
-    func initLocationManager() {
-        locationManager.delegate = self
-        locationManager.distanceFilter = kCLDistanceFilterNone
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        if CLLocationManager.authorizationStatus() == CLAuthorizationStatus.NotDetermined {
-            if (UIDevice.currentDevice().systemVersion as NSString).floatValue >= 8.0 {
-                locationManager.requestWhenInUseAuthorization()
-            }
-        }
-        locationManager.startUpdatingLocation()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        initLocationManager()
         playerView.delegate = self
         self.automaticallyAdjustsScrollViewInsets = false
         measurements.initLocation()
@@ -59,24 +44,10 @@ class SingleVideoViewController: UIViewController, YTPlayerDelegate, CLLocationM
         // Dispose of any resources that can be recreated.
     }
     override func viewWillDisappear(animated: Bool) {
-        self.playerView = nil
+        self.playerView.removeWebView()
     }
     
     // Delegates
-    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if status == CLAuthorizationStatus.AuthorizedAlways || status == CLAuthorizationStatus.AuthorizedWhenInUse {
-            locationManager.startUpdatingLocation()
-        }
-    }
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        //An array of CLLocation objects. The most recent location update is at the end of the array.
-        let currentLocation = locations.last as! CLLocation
-        locationLabel.text = "Location: \(currentLocation)"
-//        println(locations)
-    }
-    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
-//        println(error)
-    }
     func playerHadIframeApiReady(playerView: YTPlayerView) {
 //        println("api ready")
     }

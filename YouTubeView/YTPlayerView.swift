@@ -94,7 +94,6 @@ class YTPlayerView: UIView, UIWebViewDelegate {
     }
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         let url: NSURL
-        
 //        println(request.URL?.absoluteString)
         
         if request.URL == nil {
@@ -164,7 +163,11 @@ class YTPlayerView: UIView, UIWebViewDelegate {
         self.webView = newWebView
         self.addSubview(self.webView!)
     }
-    private func removeWebView() {
+    func removeWebView() {
+        self.webView?.loadHTMLString("", baseURL: NSURL(string: originalUrl))
+        self.webView?.stopLoading()
+        self.webView?.delegate = nil
+        
         self.webView?.removeFromSuperview()
         self.webView = nil
     }
