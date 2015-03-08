@@ -36,7 +36,7 @@ class SingleVideoViewController: UIViewController, YTPlayerDelegate {
         super.viewDidLoad()
         playerView.delegate = self
         self.automaticallyAdjustsScrollViewInsets = false
-        measurements.initLocation()
+//        measurements.initLocation()
     }
    
     override func didReceiveMemoryWarning() {
