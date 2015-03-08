@@ -58,8 +58,8 @@ class YTPlayerView: UIView, UIWebViewDelegate {
         newWebView()
         self.webView?.loadHTMLString(template, baseURL: NSURL(string: originalUrl))
         self.webView?.delegate = self
-        self.webView?.allowsInlineMediaPlayback = true
-        self.webView?.mediaPlaybackRequiresUserAction = false
+//        self.webView?.allowsInlineMediaPlayback = true
+//        self.webView?.mediaPlaybackRequiresUserAction = false
         return true
     }
     
@@ -67,34 +67,41 @@ class YTPlayerView: UIView, UIWebViewDelegate {
         evaluateJavaScript("player.playVideo();")
     }
     
+    func getVideoDuration() -> String? {
+        return evaluateJavaScript("player.getDuration().toString();")
+    }
+    
+    func getVideoLoadedFraction() -> String? {
+        return evaluateJavaScript("player.getVideoLoadedFraction().toString();")
+    }
+    
     func getAvailableQualityLevelsString() -> String? {
         return evaluateJavaScript("player.getAvailableQualityLevels().toString();")
     }
-    func getAvailableQualityLevels() -> [YTPlayerQuality] {
-        let raw = getAvailableQualityLevelsString()
-        var levels = [YTPlayerQuality]()
-        if raw == nil {
-            return levels
-        }
-        let rawArray = raw!.componentsSeparatedByString(",")
-        for rawLevel in rawArray {
-            if let level = YTPlayerQuality(rawValue: rawLevel) {
-                levels.append(level)
-            }
-        }
-        return levels
-    }
+//    func getAvailableQualityLevels() -> [YTPlayerQuality] {
+//        let raw = getAvailableQualityLevelsString()
+//        var levels = [YTPlayerQuality]()
+//        if raw == nil {
+//            return levels
+//        }
+//        let rawArray = raw!.componentsSeparatedByString(",")
+//        for rawLevel in rawArray {
+//            if let level = YTPlayerQuality(rawValue: rawLevel) {
+//                levels.append(level)
+//            }
+//        }
+//        return levels
+//    }
     
     private func evaluateJavaScript(js: String) -> String? {
         return self.webView?.stringByEvaluatingJavaScriptFromString(js)
     }
     
     func webView(webView: UIWebView, didFailLoadWithError error: NSError) {
-//        println(error)
+        println(error)
     }
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         let url: NSURL
-//        println(request.URL?.absoluteString)
         
         if request.URL == nil {
             return false
@@ -112,9 +119,6 @@ class YTPlayerView: UIView, UIWebViewDelegate {
             return false
         }
         return true
-    }
-    func webViewDidFinishLoad(webView: UIWebView) {
-//        println(webView.request)
     }
     
     private func shouldNavigateToUrl(url: NSURL) -> Bool {
@@ -159,6 +163,7 @@ class YTPlayerView: UIView, UIWebViewDelegate {
         newWebView.scrollView.scrollEnabled = false
         newWebView.scrollView.bounces = false
         newWebView.allowsInlineMediaPlayback = true
+        newWebView.mediaPlaybackRequiresUserAction = false
         newWebView.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.webView = newWebView
         self.addSubview(self.webView!)

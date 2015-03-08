@@ -8,14 +8,9 @@
 import Foundation
 import UIKit
 
-class SingleVideoViewController: UIViewController, YTPlayerDelegate {
+class SingleVideoViewController: UIViewController {
 
     @IBOutlet var playerView: YTPlayerView!
-    @IBOutlet var qualityLabel: UILabel!
-    @IBOutlet var availableQualitiesLabel: UILabel!
-    @IBOutlet var stateLabel: UILabel!
-    @IBOutlet var locationLabel: UILabel!
-    @IBOutlet var ispLabel: UILabel!
     var measurements = Measurements()
     
 //    required init(coder aDecoder: NSCoder) {
@@ -34,9 +29,8 @@ class SingleVideoViewController: UIViewController, YTPlayerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        playerView.delegate = self
+        playerView.delegate = measurements
         self.automaticallyAdjustsScrollViewInsets = false
-//        measurements.initLocation()
     }
    
     override func didReceiveMemoryWarning() {
@@ -48,19 +42,18 @@ class SingleVideoViewController: UIViewController, YTPlayerDelegate {
     }
     
     // Delegates
-    func playerHadIframeApiReady(playerView: YTPlayerView) {
-//        println("api ready")
-    }
-    func playerDidBecomeReady(playerView: YTPlayerView) {
-        availableQualitiesLabel.text = "Available: " + playerView.getAvailableQualityLevelsString()!
-    }
-    func playerDidChangeToState(playerView: YTPlayerView, state: YTPlayerState) {
-        stateLabel.text = "State: \(state.rawValue)"
-        availableQualitiesLabel.text = "Available: \(playerView.getAvailableQualityLevelsString()!)"
-    }
-    func playerDidChangeToQuality(playerView: YTPlayerView, quality: YTPlayerQuality) {
-        qualityLabel.text = "Quality: \(quality.rawValue)"
-    }
-
+//    func playerHadIframeApiReady(playerView: YTPlayerView) {
+////        println("api ready")
+//    }
+//    func playerDidBecomeReady(playerView: YTPlayerView) {
+//        availableQualitiesLabel.text = "Available: " + playerView.getAvailableQualityLevelsString()!
+//    }
+//    func playerDidChangeToState(playerView: YTPlayerView, state: YTPlayerState) {
+//        stateLabel.text = "State: \(state.rawValue)"
+//        availableQualitiesLabel.text = "Available: \(playerView.getAvailableQualityLevelsString()!)"
+//    }
+//    func playerDidChangeToQuality(playerView: YTPlayerView, quality: YTPlayerQuality) {
+//        qualityLabel.text = "Quality: \(quality.rawValue)"
+//    }
 }
 
