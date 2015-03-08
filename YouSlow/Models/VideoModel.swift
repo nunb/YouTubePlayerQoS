@@ -69,7 +69,7 @@ class VideoList {
     }
     
     func requestDataForRefresh() {
-        let api =  YouTubeDataApi.sharedInstance
+        let api =  DataApi.sharedInstance
         api.getList({(data: NSDictionary) -> Void in
             self.reloadVideosFromJson(data)
             self.delegate?.didReloadVideoData()

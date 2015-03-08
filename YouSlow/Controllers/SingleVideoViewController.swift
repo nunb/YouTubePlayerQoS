@@ -8,8 +8,6 @@
 import Foundation
 import UIKit
 import CoreLocation
-import CoreTelephony
-import SystemConfiguration
 
 class SingleVideoViewController: UIViewController, YTPlayerDelegate, CLLocationManagerDelegate {
 
@@ -20,12 +18,7 @@ class SingleVideoViewController: UIViewController, YTPlayerDelegate, CLLocationM
     @IBOutlet var locationLabel: UILabel!
     @IBOutlet var ispLabel: UILabel!
     var locationManager: CLLocationManager = CLLocationManager()
-    var telephonyInfo = CTTelephonyNetworkInfo()
-
-    var city: String?
-    var country: String?
-    var loc: String?
-    var isp: CTCarrier?
+    var measurements = Measurements()
     
 //    required init(coder aDecoder: NSCoder) {
 //        super.init()
@@ -58,19 +51,7 @@ class SingleVideoViewController: UIViewController, YTPlayerDelegate, CLLocationM
         initLocationManager()
         playerView.delegate = self
         self.automaticallyAdjustsScrollViewInsets = false
-//        isp = telephonyInfo.currentRadioAccessTechnology
-//        system
-//        ispLabel.text = "ISP: \(telephonyInfo.currentRadioAccessTechnology)"
-    }
-    override func viewWillAppear(animated: Bool) {
-        let api = YouTubeDataApi.sharedInstance
-        api.getNetworkInfo({(res: NSDictionary) -> Void in
-            let org = res["org"] as! String
-            dispatch_async(dispatch_get_main_queue(), {
-                self.ispLabel.text = "ISP: \(org)"
-            })
-        })
-
+        measurements.initLocation()
     }
    
     override func didReceiveMemoryWarning() {

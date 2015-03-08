@@ -9,27 +9,47 @@
 //import Foundation
 import CoreLocation
 
-class Mesurements {
-    private var location: Location?
+class Measurements {
+    private var location = Location()
     private let qos = QualityOfService()
     private var token = dispatch_once_t()
     
-    func getLocation(CLLocation) {
+    func initLocation() {
         dispatch_once(&token, {
-            
+            self.location.getLocation()
         })
     }
 }
 
 class Location {
-    var coordinates: String
-    var country: String
-    var city: String
-    
-    init(coordinates coord: String, country : String, city : String) {
-        coordinates = coord
-        self.country = country
-        self.city = city
+    private var coordinates: String?
+    private var country: String?
+    private var city: String?
+    private var region: String?
+    private var org: String?
+    var isReady: Bool {
+        return coordinates != nil && country != nil && city != nil
+    }
+    func getLocation() {
+        if isReady {
+            return
+        }
+        DataApi.sharedInstance.getNetworkInfo(convertResponse, fail: failHandler)
+    }
+    private func convertResponse(res: NSDictionary) {
+        if let city = res["city"] as? String, region = res["regionName"] as? String, country = res["countryCode"] as? String, lat = res["lat"] as? Float, lon = res["lon"] as? Float, org = res["org"] as? String {
+            self.city = city.stringByReplacingOccurrencesOfString(" ", withString: "", options: NSStringCompareOptions.allZeros, range: nil)
+            self.country = country
+            self.region = region.stringByReplacingOccurrencesOfString(" ", withString: "", options: NSStringCompareOptions.allZeros, range: nil)
+            self.coordinates = "\(lat),\(lon)"
+            self.org = org.stringByReplacingOccurrencesOfString(" ", withString: "", options: NSStringCompareOptions.allZeros, range: nil)
+        }
+    }
+    private func failHandler(err: NSError) {
+        
+    }
+    func updateLocationThen(success: () -> Void) {
+        
     }
 }
 

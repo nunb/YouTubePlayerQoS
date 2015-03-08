@@ -8,14 +8,14 @@
 
 import UIKit
 
-class YouTubeDataApi {
+class DataApi {
     
     var session: NSURLSession = NSURLSession()
     let host = "https://www.googleapis.com/youtube/v3/"
     let apiKey = "AIzaSyCQmq0XDn_UyKQtMcrKHlbVBKnWUsojqLg"
     let googleApiReferer = "app.demo.com"
     
-    static let sharedInstance = YouTubeDataApi()
+    static let sharedInstance = DataApi()
     
     private init() {
 //        super.init()
@@ -28,8 +28,8 @@ class YouTubeDataApi {
         get("\(host)search?part=snippet&key=\(apiKey)", success: success)
     }
     
-    func getNetworkInfo(success: NSDictionary -> Void) {
-        get("http://ip-api.com/json/", success: success)
+    func getNetworkInfo(success: NSDictionary -> Void, fail: NSError -> Void) {
+        get("http://ip-api.com/json/", success: success, fail: fail)
     }
     
     private func get(path: String, success: (NSDictionary) -> Void, fail: ((NSError) -> Void)? = nil) {
@@ -42,26 +42,21 @@ class YouTubeDataApi {
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             
             if err != nil {
-                if fail != nil {
-                    println(err)
-                    fail!(err)
-                }
+                fail?(err)
                 return
             }
-            println(data)
             var jsonErr: NSError?
-            let jsonObject: AnyObject! = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers | NSJSONReadingOptions.AllowFragments, error: &jsonErr)
-            if jsonErr == nil {
-                if let json = jsonObject as? NSDictionary  {
-                    success(json)
-                    return
-                }
+            let jsonObject: AnyObject! = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonErr)
+            if jsonErr != nil {
+                // Json Conversion Error
+                fail?(NSError(domain: "json conversion", code: 510, userInfo: nil))
+                return
             }
-            else {
-                println(jsonErr)
+        
+            if let json = jsonObject as? NSDictionary  {
+                success(json)
+                return
             }
-            // Json Conversion Error
-            fail?(NSError(domain: "json conversion", code: 510, userInfo: nil))
         })
         
         task.resume()
