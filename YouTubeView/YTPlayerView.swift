@@ -67,6 +67,10 @@ class YTPlayerView: UIView, UIWebViewDelegate {
         evaluateJavaScript("player.playVideo();")
     }
     
+    func destroyPlayer() {
+        evaluateJavaScript("player.destroy();")
+    }
+    
     func getVideoDuration() -> String? {
         return evaluateJavaScript("player.getDuration().toString();")
     }
@@ -120,7 +124,9 @@ class YTPlayerView: UIView, UIWebViewDelegate {
         }
         return true
     }
-    
+    func webViewDidStartLoad(webView: UIWebView) {
+        println(webView.request?.URL)
+    }
     private func shouldNavigateToUrl(url: NSURL) -> Bool {
         return true
     }
@@ -169,6 +175,7 @@ class YTPlayerView: UIView, UIWebViewDelegate {
         self.addSubview(self.webView!)
     }
     func removeWebView() {
+        self.destroyPlayer()
         self.webView?.loadHTMLString("", baseURL: NSURL(string: originalUrl))
         self.webView?.stopLoading()
         self.webView?.delegate = nil
