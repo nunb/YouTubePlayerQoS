@@ -39,16 +39,21 @@ class Measurements: YTPlayerDelegate{
             if startTime == nil {
                 return
             }
-//            if lastState
-            let interval = 0 - Int(startTime!.timeIntervalSinceNow)
-            qos.startBuffering(interval)
+            if lastState == YTPlayerState.Playing {
+                let interval = 0 - Int(startTime!.timeIntervalSinceNow)
+                qos.startBuffering(interval)
+            }
+            lastState = YTPlayerState.Buffering
         }
         else if state == YTPlayerState.Playing {
             if startTime == nil {
                 return
             }
-            let interval = 0 - Int(startTime!.timeIntervalSinceNow)
-            qos.endBuffering(interval)
+            if lastState == YTPlayerState.Buffering {
+                let interval = 0 - Int(startTime!.timeIntervalSinceNow)
+                qos.endBuffering(interval)
+            }
+            lastState = YTPlayerState.Playing
         }
         else if state == YTPlayerState.Cued {
             

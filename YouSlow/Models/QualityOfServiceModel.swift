@@ -51,7 +51,11 @@ class QualityOfService {
         lastBuffering = startTime
     }
     func endBuffering(endTime: Int) {
-        bufferings[lastBuffering] = endTime - lastBuffering
+        let interval = endTime - lastBuffering
+        if interval <= 0 {
+            return
+        }
+        bufferings[lastBuffering] = interval
         numOfBufferings += 1
     }
 }
