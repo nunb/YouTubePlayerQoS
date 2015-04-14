@@ -24,3 +24,10 @@ Tasks
 	-	[ ] report to server when video ended
 -	[ ] YouSlow demo
 	-	[ ] charts show history data
+
+References
+----------
+
+-	YouSlow Project: https://dyswis.cs.columbia.edu/youslow/
+-	YouSlow Chrome extension: https://chrome.google.com/webstore/detail/youtube-too-slow-youslow/agpnjngphbdlfoeoglcamjgabcocpobi
+-	API used: https://developers.google.com/youtube
