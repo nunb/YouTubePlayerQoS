@@ -52,6 +52,7 @@
 /* Begin PBXFileReference section */
 		BA0CC8391AA26ABB000910E2 /* MesurementsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MesurementsModel.swift; sourceTree = "<group>"; };
 		BA0CC83B1AA6603E000910E2 /* YouSlow-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "YouSlow-Bridging-Header.h"; sourceTree = "<group>"; };
+		BA1CC8171ADCCFEA005E3C52 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		BA8142951A7EC8AE004A1A4E /* YouSlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YouSlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA8142991A7EC8AE004A1A4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BA81429A1A7EC8AE004A1A4E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -114,6 +115,7 @@
 		BA8142971A7EC8AE004A1A4E /* YouSlow */ = {
 			isa = PBXGroup;
 			children = (
+				BA1CC8171ADCCFEA005E3C52 /* MyPlayground.playground */,
 				BA8143D01A8D1658004A1A4E /* Models */,
 				BA8143D21A8D1658004A1A4E /* Views */,
 				BA8143CF1A8D1658004A1A4E /* Controllers */,

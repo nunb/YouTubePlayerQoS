@@ -39,7 +39,7 @@ class Measurements: YTPlayerDelegate{
             if startTime == nil {
                 return
             }
-            if lastState
+//            if lastState
             let interval = 0 - Int(startTime!.timeIntervalSinceNow)
             qos.startBuffering(interval)
         }
