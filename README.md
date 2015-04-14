@@ -13,10 +13,10 @@ Tasks
 	-	[ ] play selected item
 	-	[ ] UIWebView memory, now leak ~5M
 -	[ ] YouSlow measurements
-	-	[ ] localtime
-	-	[ ] city, region, country, loc
-	-	[ ] org
-	-	[ ] numofrebufferings, bufferduration, bufferdurationwithtime
+	-	[x] localtime
+	-	[x] city, region, country, loc
+	-	[x] org
+	-	[x] numofrebufferings, bufferduration, bufferdurationwithtime
 	-	[ ] resolutionchanges, requestedresolutions, requestedresolutionswithtime
 	-	[ ] timelength, abandonment, allquality
 	-	[ ] initialbufferingtime
