@@ -9,14 +9,14 @@
 import Foundation
 
 class QualityOfService {
-    private var lastBuffering = 0.0
+    private var lastBuffering = 0
     var numOfBufferings = 0
-    var durationOfBufferings = 0.0
+    var durationOfBufferings = 0
     // key is timestamp, value is duration
-    private var bufferings = Dictionary<Double, Double>()
+    private var bufferings = Dictionary<Int, Int>()
     // key is timestamp, value is resolution quality
-    private var resolutions = Dictionary<Double, String>()
-    var length: Double?
+    private var resolutions = Dictionary<Int, String>()
+    var length = 0
     // in milliseconds
     var initialBuffering = 0
     var abandonment = ""
@@ -46,14 +46,12 @@ class QualityOfService {
         }
         return res
     }
-    func getVideoLength(l: Double) {
-        length = l
-    }
     
-    func startBuffering(startTime: Double) {
+    func startBuffering(startTime: Int) {
         lastBuffering = startTime
     }
-    func endBuffering(endTime: Double) {
+    func endBuffering(endTime: Int) {
         bufferings[lastBuffering] = endTime - lastBuffering
+        numOfBufferings += 1
     }
 }

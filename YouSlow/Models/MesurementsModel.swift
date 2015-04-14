@@ -13,32 +13,48 @@ class Measurements: YTPlayerDelegate{
     private let isp = Isp()
     private let qos = QualityOfService()
     private var token = dispatch_once_t()
+    private var startTime: NSDate?
+    private var lastState = YTPlayerState.Unstarted
     func startMeasuring() {
-        
+        startTime = NSDate()
     }
     func endMeasuring() {
         
     }
     func reportMeasurements() {
-        
+        var data = Dictionary<String, String>()
+        DataApi.sharedInstance.postYouSlow(data, success: {
+            (res: NSDictionary) in
+            
+            })
     }
     // Delegates
     func playerHadIframeApiReady(playerView: YTPlayerView) {
 //        println("api ready")
     }
     func playerDidBecomeReady(playerView: YTPlayerView) {
-//        availableQualitiesLabel.text = "Available: " + playerView.getAvailableQualityLevelsString()!
     }
     func playerDidChangeToState(playerView: YTPlayerView, state: YTPlayerState) {
         if state == YTPlayerState.Buffering {
-            qos.startBuffering(0)
+            if startTime == nil {
+                return
+            }
+            if lastState
+            let interval = 0 - Int(startTime!.timeIntervalSinceNow)
+            qos.startBuffering(interval)
         }
-        
-//        stateLabel.text = "State: \(state.rawValue)"
-//        availableQualitiesLabel.text = "Available: \(playerView.getAvailableQualityLevelsString()!)"
+        else if state == YTPlayerState.Playing {
+            if startTime == nil {
+                return
+            }
+            let interval = 0 - Int(startTime!.timeIntervalSinceNow)
+            qos.endBuffering(interval)
+        }
+        else if state == YTPlayerState.Cued {
+            
+        }
     }
     func playerDidChangeToQuality(playerView: YTPlayerView, quality: YTPlayerQuality) {
-//        qualityLabel.text = "Quality: \(quality.rawValue)"
     }
 }
 

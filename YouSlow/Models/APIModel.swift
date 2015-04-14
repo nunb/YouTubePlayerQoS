@@ -32,6 +32,10 @@ class DataApi {
         get("http://ip-api.com/json/", success: success, fail: fail)
     }
     
+    func postYouSlow(data: Dictionary<String, String>, success: NSDictionary -> Void) {
+        get("https://dyswis.cs.columbia.edu/youslow/dbupdatesecured9.php?localtime=2015-4-6%2013:58:40&hostname=none&city=NewYork&region=NewYork&country=US&loc=40.7553,-73.9924&org=AS14ColumbiaUniveristy&numofrebufferings=1&bufferduration=2&bufferdurationwithtime=1?5:10?11&resolutionchanges=5&requestedresolutions=large:small:tiny&requestedresolutionswithtime=0?large:11?small:25?hd720&timelength=110&initialbufferingtime=125&abandonment=0&avglatency=234&allquality=hd1080:hd720:large:medium:small:tiny:auto:&version=iOS%201.0.0", success: success)
+    }
+    
     private func get(path: String, success: (NSDictionary) -> Void, fail: ((NSError) -> Void)? = nil) {
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
@@ -49,6 +53,8 @@ class DataApi {
             let jsonObject: AnyObject! = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonErr)
             if jsonErr != nil {
                 // Json Conversion Error
+//                let resString = String(data
+                println(NSString(data: data, encoding:NSUTF8StringEncoding))
                 fail?(NSError(domain: "json conversion", code: 510, userInfo: nil))
                 return
             }

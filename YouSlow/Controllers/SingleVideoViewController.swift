@@ -39,6 +39,7 @@ class SingleVideoViewController: UIViewController {
     }
     override func viewWillDisappear(animated: Bool) {
         self.playerView.removeWebView()
+        measurements.reportMeasurements()
     }
     
     // Delegates
