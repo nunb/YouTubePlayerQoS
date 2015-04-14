@@ -56,8 +56,8 @@ class YTPlayerView: UIView, UIWebViewDelegate {
             return false
         }
         newWebView()
-        self.webView?.loadHTMLString(template, baseURL: NSURL(string: originalUrl))
-        self.webView?.delegate = self
+        webView?.loadHTMLString(template, baseURL: NSURL(string: originalUrl))
+        webView?.delegate = self
 //        self.webView?.allowsInlineMediaPlayback = true
 //        self.webView?.mediaPlaybackRequiresUserAction = false
         return true
@@ -171,17 +171,17 @@ class YTPlayerView: UIView, UIWebViewDelegate {
         newWebView.allowsInlineMediaPlayback = true
         newWebView.mediaPlaybackRequiresUserAction = false
         newWebView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        self.webView = newWebView
-        self.addSubview(self.webView!)
+        webView = newWebView
+        addSubview(self.webView!)
     }
     func removeWebView() {
-        self.destroyPlayer()
-        self.webView?.loadHTMLString("", baseURL: NSURL(string: originalUrl))
-        self.webView?.stopLoading()
-        self.webView?.delegate = nil
+        destroyPlayer()
+        webView?.loadHTMLString("", baseURL: NSURL(string: originalUrl))
+        webView?.stopLoading()
+        webView?.delegate = nil
         
-        self.webView?.removeFromSuperview()
-        self.webView = nil
+        webView?.removeFromSuperview()
+        webView = nil
     }
     
     

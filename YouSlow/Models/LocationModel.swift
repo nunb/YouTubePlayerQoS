@@ -9,16 +9,19 @@ import UIKit
 import CoreLocation
 
 class Location: NSObject, CLLocationManagerDelegate {
-    private var coordinates: String?
-    private var country: String?
-    private var city: String?
-    private var region: String?
+    var coordinates: String?
+    var country: String?
+    var city: String?
+    var region: String?
     let locationManager = CLLocationManager()
     let geoCoder = CLGeocoder()
     var currentLocation: CLLocation?
     var geoCoderToken = dispatch_once_t()
+    var org: String?
+
     override init() {
         super.init()
+        getOrg()
         locationManager.delegate = self
         locationManager.distanceFilter = kCLDistanceFilterNone
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -29,6 +32,25 @@ class Location: NSObject, CLLocationManagerDelegate {
             }
         }
         //        locationManager.startUpdatingLocation()
+    }
+    
+    var isReady: Bool {
+        return org != nil
+    }
+    private func getOrg() {
+        if isReady {
+            return
+        }
+        DataApi.sharedInstance.getNetworkInfo(convertResponse, fail: failHandler)
+    }
+    private func convertResponse(res: NSDictionary) {
+        if let org = res["org"] as? String {
+            self.org = org.stringByReplacingOccurrencesOfString(" ", withString: "", options: NSStringCompareOptions.allZeros, range: nil)
+            println("ISP: \(self.org!)")
+        }
+    }
+    private func failHandler(err: NSError) {
+        
     }
     
     private func decodeLocation(array: [AnyObject]!, err: NSError!) -> Void {

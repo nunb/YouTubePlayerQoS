@@ -21,7 +21,6 @@
 		BA8144141A8D8688004A1A4E /* VideoTableDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8144131A8D8688004A1A4E /* VideoTableDataSource.swift */; };
 		BA8DD0541AACDB90000B238F /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8DD0531AACDB90000B238F /* LocationModel.swift */; };
 		BA8DD0561AACDC35000B238F /* QualityOfServiceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8DD0551AACDC35000B238F /* QualityOfServiceModel.swift */; };
-		BA8DD0581AACDC67000B238F /* IspModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8DD0571AACDC67000B238F /* IspModel.swift */; };
 		BA97FC971A9148CE002CE3E5 /* YTPlayerEnumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA97FC941A9148CE002CE3E5 /* YTPlayerEnumerations.swift */; };
 		BA97FC991A9148CE002CE3E5 /* YTPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA97FC961A9148CE002CE3E5 /* YTPlayerView.swift */; };
 /* End PBXBuildFile section */
@@ -51,7 +50,6 @@
 
 /* Begin PBXFileReference section */
 		BA0CC8391AA26ABB000910E2 /* MesurementsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MesurementsModel.swift; sourceTree = "<group>"; };
-		BA0CC83B1AA6603E000910E2 /* YouSlow-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "YouSlow-Bridging-Header.h"; sourceTree = "<group>"; };
 		BA1CC8171ADCCFEA005E3C52 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		BA8142951A7EC8AE004A1A4E /* YouSlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YouSlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA8142991A7EC8AE004A1A4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -69,7 +67,6 @@
 		BA8144131A8D8688004A1A4E /* VideoTableDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoTableDataSource.swift; sourceTree = "<group>"; };
 		BA8DD0531AACDB90000B238F /* LocationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
 		BA8DD0551AACDC35000B238F /* QualityOfServiceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QualityOfServiceModel.swift; sourceTree = "<group>"; };
-		BA8DD0571AACDC67000B238F /* IspModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IspModel.swift; sourceTree = "<group>"; };
 		BA97FC941A9148CE002CE3E5 /* YTPlayerEnumerations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YTPlayerEnumerations.swift; sourceTree = "<group>"; };
 		BA97FC951A9148CE002CE3E5 /* YTPlayerIframeTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = YTPlayerIframeTemplate.html; sourceTree = "<group>"; };
 		BA97FC961A9148CE002CE3E5 /* YTPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YTPlayerView.swift; sourceTree = "<group>"; };
@@ -159,7 +156,6 @@
 				BA8142C41A8693EA004A1A4E /* VideoTableViewController.swift */,
 				BA8144131A8D8688004A1A4E /* VideoTableDataSource.swift */,
 				BA81429C1A7EC8AE004A1A4E /* SingleVideoViewController.swift */,
-				BA0CC83B1AA6603E000910E2 /* YouSlow-Bridging-Header.h */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -169,7 +165,6 @@
 			children = (
 				BA8142C21A832768004A1A4E /* APIModel.swift */,
 				BA0CC8391AA26ABB000910E2 /* MesurementsModel.swift */,
-				BA8DD0571AACDC67000B238F /* IspModel.swift */,
 				BA8DD0531AACDB90000B238F /* LocationModel.swift */,
 				BA8DD0551AACDC35000B238F /* QualityOfServiceModel.swift */,
 				BA8142C61A8698C3004A1A4E /* VideoModel.swift */,
@@ -307,7 +302,6 @@
 				BA8142C31A832768004A1A4E /* APIModel.swift in Sources */,
 				BA81429D1A7EC8AE004A1A4E /* SingleVideoViewController.swift in Sources */,
 				BA8DD0541AACDB90000B238F /* LocationModel.swift in Sources */,
-				BA8DD0581AACDC67000B238F /* IspModel.swift in Sources */,
 				BA8144141A8D8688004A1A4E /* VideoTableDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -442,7 +436,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = YouSlow;
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "YouSlow/Controllers/YouSlow-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -461,7 +455,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = YouSlow;
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "YouSlow/Controllers/YouSlow-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

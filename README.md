@@ -18,10 +18,10 @@ Tasks
 	-	[x] org
 	-	[x] numofrebufferings, bufferduration, bufferdurationwithtime
 	-	[x] resolutionchanges, requestedresolutions, requestedresolutionswithtime
-	-	[ ] timelength, abandonment, allquality
+	-	[x] timelength, abandonment, allquality
 	-	[ ] initialbufferingtime
-	-	[ ] version
-	-	[ ] report to server when video ended
+	-	[x] version
+	-	[x] report to server when video ended
 -	[ ] YouSlow demo
 	-	[ ] charts show history data
 

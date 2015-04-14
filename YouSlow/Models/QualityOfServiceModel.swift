@@ -11,6 +11,7 @@ import Foundation
 class QualityOfService {
     var numOfBufferings = 0
     var durationOfBufferings = 0
+    var resolutionChanges = 0
 
     private var bufferingTimes = [Int]()
     private var bufferingIntervals = [Int]()
@@ -20,16 +21,23 @@ class QualityOfService {
     private var qualityStrings = [String]()
     private var lastResolutionTime = -1
     
-    var length = 0
+    var timeLength = ""
     // in milliseconds
     var initialBuffering = 0
     var abandonment = ""
+    var loadedFraction = ""
     var availableQualities = ""
+    
+    init() {
+//        qualityTimes.append(0)
+//        qualityStrings.append("default")
+//        lastResolutionTime = 0
+    }
     
     var bufferingsWithTime: String {
         var description = ""
         for i in 0 ..< bufferingTimes.count {
-            description += "\(bufferingTimes[i])?\(bufferingIntervals[i])"
+            description += "\(bufferingTimes[i])?\(bufferingIntervals[i]):"
         }
         return description
     }
@@ -57,6 +65,7 @@ class QualityOfService {
         qualityTimes.append(time)
         qualityStrings.append(quality)
         lastResolutionTime = time
+        resolutionChanges += 1
     }
     
     func startBuffering(startTime: Int) {

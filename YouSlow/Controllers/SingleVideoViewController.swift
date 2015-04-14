@@ -38,7 +38,9 @@ class SingleVideoViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     override func viewWillDisappear(animated: Bool) {
-        self.playerView.removeWebView()
+        let fraction = playerView.getVideoLoadedFraction()!
+        measurements.endMeasuring(fraction)
+        playerView.removeWebView()
         measurements.reportMeasurements()
     }
     

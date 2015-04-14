@@ -32,8 +32,19 @@ class DataApi {
         get("http://ip-api.com/json/", success: success, fail: fail)
     }
     
-    func postYouSlow(data: Dictionary<String, String>, success: NSDictionary -> Void) {
-        get("https://dyswis.cs.columbia.edu/youslow/dbupdatesecured9.php?localtime=2015-4-6%2013:58:40&hostname=none&city=NewYork&region=NewYork&country=US&loc=40.7553,-73.9924&org=AS14ColumbiaUniveristy&numofrebufferings=1&bufferduration=2&bufferdurationwithtime=1?5:10?11&resolutionchanges=5&requestedresolutions=large:small:tiny&requestedresolutionswithtime=0?large:11?small:25?hd720&timelength=110&initialbufferingtime=125&abandonment=0&avglatency=234&allquality=hd1080:hd720:large:medium:small:tiny:auto:&version=iOS%201.0.0", success: success)
+    func postYouSlow(data: [String: String], success: NSDictionary -> Void) {
+        var req = "version=iOS1.0&hostname=none&"
+        let time = NSDate()
+        let format = NSDateFormatter()
+        format.dateFormat = "yyyy-MM-dd%20HH:mm:ss"
+        format.stringFromDate(time)
+        req += "localtime=\(format.stringFromDate(time))&"
+        
+        for (key, value) in data {
+            req += "\(key)=\(value)&"
+        }
+        
+        get("https://dyswis.cs.columbia.edu/youslow/dbupdatesecured9.php?\(req)", success: success)
     }
     
     private func get(path: String, success: (NSDictionary) -> Void, fail: ((NSError) -> Void)? = nil) {
