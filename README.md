@@ -17,7 +17,7 @@ Tasks
 	-	[x] city, region, country, loc
 	-	[x] org
 	-	[x] numofrebufferings, bufferduration, bufferdurationwithtime
-	-	[ ] resolutionchanges, requestedresolutions, requestedresolutionswithtime
+	-	[x] resolutionchanges, requestedresolutions, requestedresolutionswithtime
 	-	[ ] timelength, abandonment, allquality
 	-	[ ] initialbufferingtime
 	-	[ ] version

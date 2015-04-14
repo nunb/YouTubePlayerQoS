@@ -40,8 +40,8 @@ class Measurements: YTPlayerDelegate{
                 return
             }
             if lastState == YTPlayerState.Playing {
-                let interval = 0 - Int(startTime!.timeIntervalSinceNow)
-                qos.startBuffering(interval)
+                let time = 0 - Int(startTime!.timeIntervalSinceNow)
+                qos.startBuffering(time)
             }
             lastState = YTPlayerState.Buffering
         }
@@ -50,8 +50,8 @@ class Measurements: YTPlayerDelegate{
                 return
             }
             if lastState == YTPlayerState.Buffering {
-                let interval = 0 - Int(startTime!.timeIntervalSinceNow)
-                qos.endBuffering(interval)
+                let time = 0 - Int(startTime!.timeIntervalSinceNow)
+                qos.endBuffering(time)
             }
             lastState = YTPlayerState.Playing
         }
@@ -60,6 +60,11 @@ class Measurements: YTPlayerDelegate{
         }
     }
     func playerDidChangeToQuality(playerView: YTPlayerView, quality: YTPlayerQuality) {
+        if startTime == nil {
+            return
+        }
+        let time = 0 - Int(startTime!.timeIntervalSinceNow)
+        qos.changeToQuality(time, quality: quality.rawValue)
     }
 }
 

@@ -9,13 +9,17 @@
 import Foundation
 
 class QualityOfService {
-    private var lastBuffering = 0
     var numOfBufferings = 0
     var durationOfBufferings = 0
-    // key is timestamp, value is duration
-    private var bufferings = Dictionary<Int, Int>()
-    // key is timestamp, value is resolution quality
-    private var resolutions = Dictionary<Int, String>()
+
+    private var bufferingTimes = [Int]()
+    private var bufferingIntervals = [Int]()
+    private var lastBuffering = 0
+
+    private var qualityTimes = [Int]()
+    private var qualityStrings = [String]()
+    private var lastResolutionTime = -1
+    
     var length = 0
     // in milliseconds
     var initialBuffering = 0
@@ -24,27 +28,35 @@ class QualityOfService {
     
     var bufferingsWithTime: String {
         var description = ""
-        for (key, value) in bufferings {
-            description += "\(key)?\(value):"
+        for i in 0 ..< bufferingTimes.count {
+            description += "\(bufferingTimes[i])?\(bufferingIntervals[i])"
         }
         return description
     }
     var timesOfResolutionChange: Int {
-        return resolutions.count
+        return qualityTimes.count
     }
     var requestedResolutions: String {
         var res = ""
-        for (key, value) in resolutions {
-            res += "\(value):"
+        for i in 0 ..< qualityStrings.count {
+            res += "\(qualityStrings[i]):"
         }
         return res
     }
     var requestedResolutionsWithTime: String {
         var res = ""
-        for (key, value) in resolutions {
-            res += "\(key)?\(value):"
+        for i in 0 ..< qualityTimes.count {
+            res += "\(qualityTimes[i])?\(qualityStrings[i]):"
         }
         return res
+    }
+    func changeToQuality(time: Int, quality: String) {
+        if lastResolutionTime >= time {
+            return
+        }
+        qualityTimes.append(time)
+        qualityStrings.append(quality)
+        lastResolutionTime = time
     }
     
     func startBuffering(startTime: Int) {
@@ -55,7 +67,9 @@ class QualityOfService {
         if interval <= 0 {
             return
         }
-        bufferings[lastBuffering] = interval
+        bufferingTimes.append(lastBuffering)
+        bufferingIntervals.append(interval)
         numOfBufferings += 1
+        durationOfBufferings += interval
     }
 }
