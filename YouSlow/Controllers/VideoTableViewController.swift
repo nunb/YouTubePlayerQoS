@@ -8,16 +8,20 @@
 
 import UIKit
 
-class VideoTableViewController: UITableViewController, VideoListProtocol {
+class VideoTableViewController: UITableViewController, UISearchBarDelegate, VideoListProtocol {
     
+    @IBOutlet var videoSearchBar: UISearchBar!
     var videoDataSource = VideoTableDataSource()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.tableView.dataSource = videoDataSource
+        self.tableView.delegate = videoDataSource
+        videoSearchBar.delegate = self
         self.videoDataSource.videoList.delegate = self
-        
+
+        self.videoDataSource.videoList.requestDataForRefresh("hi")
+
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -26,7 +30,6 @@ class VideoTableViewController: UITableViewController, VideoListProtocol {
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.videoDataSource.videoList.requestDataForRefresh()
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,48 +43,27 @@ class VideoTableViewController: UITableViewController, VideoListProtocol {
             self.tableView.reloadData()
         })
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
     
-    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        let query = searchBar.text
+        self.videoDataSource.videoList.requestDataForRefresh(query)
+        searchBar.resignFirstResponder()
+    }
     
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let dest = segue.destinationViewController as! SingleVideoViewController
+        let cell = sender as! UITableViewCell
+        let row = self.tableView.indexPathForCell(cell)!.row
+        cell.selected = false
+        dest.hidesBottomBarWhenPushed = true
+        dest.videoId = self.videoDataSource.videoList.videoIdOfIndex(row)
+
         // Get the new view controller using [segue destinationViewController].
         // Pass the selected object to the new view controller.
     }

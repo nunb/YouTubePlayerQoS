@@ -24,11 +24,11 @@ class YTPlayerView: UIView, UIWebViewDelegate {
 
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        loadPlayerWithOptions(nil)
+//        loadPlayerWithOptions(nil)
     }
     override init(frame: CGRect) {
         super.init(frame: frame)
-        loadPlayerWithOptions(nil)
+//        loadPlayerWithOptions(nil)
     }
 
     /*
@@ -44,7 +44,7 @@ class YTPlayerView: UIView, UIWebViewDelegate {
         self.evaluateJavaScript(js)
     }
     
-    func loadPlayerWithOptions(option: Dictionary<String, String>?) -> Bool {
+    func loadPlayerWithOptions(id: String) -> Bool {
         let bundle = NSBundle.mainBundle();
         let path = NSBundle.mainBundle().pathForResource("YTPlayerIframeTemplate", ofType: "html")
         if path == nil {
@@ -52,11 +52,12 @@ class YTPlayerView: UIView, UIWebViewDelegate {
         }
         var err: NSError?
         let template = NSString(contentsOfFile: path!, encoding: NSUTF8StringEncoding, error: &err) as! String
+        let iframe = template.stringByReplacingOccurrencesOfString("{{VIDEO_ID}}", withString: id, options: NSStringCompareOptions.allZeros, range: nil)
         if err != nil {
             return false
         }
         newWebView()
-        webView?.loadHTMLString(template, baseURL: NSURL(string: originalUrl))
+        webView?.loadHTMLString(iframe, baseURL: NSURL(string: originalUrl))
         webView?.delegate = self
 //        self.webView?.allowsInlineMediaPlayback = true
 //        self.webView?.mediaPlaybackRequiresUserAction = false
@@ -82,20 +83,6 @@ class YTPlayerView: UIView, UIWebViewDelegate {
     func getAvailableQualityLevelsString() -> String? {
         return evaluateJavaScript("player.getAvailableQualityLevels().toString();")
     }
-//    func getAvailableQualityLevels() -> [YTPlayerQuality] {
-//        let raw = getAvailableQualityLevelsString()
-//        var levels = [YTPlayerQuality]()
-//        if raw == nil {
-//            return levels
-//        }
-//        let rawArray = raw!.componentsSeparatedByString(",")
-//        for rawLevel in rawArray {
-//            if let level = YTPlayerQuality(rawValue: rawLevel) {
-//                levels.append(level)
-//            }
-//        }
-//        return levels
-//    }
     
     private func evaluateJavaScript(js: String) -> String? {
         return self.webView?.stringByEvaluatingJavaScriptFromString(js)

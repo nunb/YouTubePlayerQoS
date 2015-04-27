@@ -39,6 +39,12 @@ class Measurements: YTPlayerDelegate{
             }
             var report = [String: String]()
 
+            let time = NSDate()
+            let format = NSDateFormatter()
+            format.dateFormat = "yyyy-MM-dd%20HH:mm:ss"
+            format.stringFromDate(time)
+            report["localtime"] = format.stringFromDate(time)
+            report["hostname"] = "none"
             report["city"] = self!.location.city!
             report["region"] = self!.location.region!
             report["country"] = self!.location.country!
@@ -53,6 +59,10 @@ class Measurements: YTPlayerDelegate{
             report["timelength"] = "\(self!.qos.timeLength)"
             report["abandonment"] = "\(self!.qos.abandonment):\(self!.qos.loadedFraction)"
             report["allquality"] = self!.qos.availableQualities
+            report["initialbufferingtime"] = "125"
+            report["avglatency"] = "234"
+            report["version"] = "iOS1.0"
+            
             
             DataApi.sharedInstance.postYouSlow(report, success: {
                 (res: NSDictionary) in

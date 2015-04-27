@@ -24,8 +24,8 @@ class DataApi {
         session = NSURLSession(configuration: sessionConfiguration)
     }
     
-    func getList(success: NSDictionary -> Void) {
-        get("\(host)search?part=snippet&key=\(apiKey)", success: success)
+    func getList(query: String, success: NSDictionary -> Void) {
+        get("\(host)search?part=snippet&q=\(query)&maxResults=10&key=\(apiKey)", success: success)
     }
     
     func getNetworkInfo(success: NSDictionary -> Void, fail: NSError -> Void) {
@@ -33,15 +33,16 @@ class DataApi {
     }
     
     func postYouSlow(data: [String: String], success: NSDictionary -> Void) {
-        var req = "version=iOS1.0&hostname=none&"
-        let time = NSDate()
-        let format = NSDateFormatter()
-        format.dateFormat = "yyyy-MM-dd%20HH:mm:ss"
-        format.stringFromDate(time)
-        req += "localtime=\(format.stringFromDate(time))&"
+        var req = ""
+//        let time = NSDate()
+//        let format = NSDateFormatter()
+//        format.dateFormat = "yyyy-MM-dd%20HH:mm:ss"
+//        format.stringFromDate(time)
+//        req += "localtime=\(format.stringFromDate(time))&"
+        let orderedKeys = ["localtime", "hostname", "city", "region", "country", "loc", "org", "numofrebufferings", "bufferduration", "bufferdurationwithtime", "resolutionchanges", "requestedresolutions", "requestedresolutionswithtime", "timelength", "initialbufferingtime", "abandonment", "avglatency", "allquality", "version"]
         
-        for (key, value) in data {
-            req += "\(key)=\(value)&"
+        for key in orderedKeys {
+            req += "\(key)=\(data[key]!)&"
         }
         
         get("https://dyswis.cs.columbia.edu/youslow/dbupdatesecured9.php?\(req)", success: success)
@@ -51,6 +52,7 @@ class DataApi {
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
+        println(path)
         let url = NSURL(string: path)
 
         let task = session.dataTaskWithURL(url!, completionHandler: {(data: NSData!, res: NSURLResponse!, err: NSError!) -> Void in

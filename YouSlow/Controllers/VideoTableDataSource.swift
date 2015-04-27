@@ -8,7 +8,7 @@
 
 import UIKit
 
-class VideoTableDataSource: NSObject, UITableViewDataSource  {
+class VideoTableDataSource: NSObject, UITableViewDataSource, UITableViewDelegate  {
     
     var videoList = VideoList()
     
@@ -24,11 +24,32 @@ class VideoTableDataSource: NSObject, UITableViewDataSource  {
         return videoList.numberOfVideos()
     }
     
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 120;
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("VideoListCell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("VideoListCell", forIndexPath: indexPath) as! VideoItemViewCell
         let row = indexPath.row
-        cell.textLabel?.text = videoList.videoTitleOfIndex(row)
-        //        cell.imageView?.image =
+        cell.titleLabel?.text = videoList.videoTitleOfIndex(row)
+        cell.detailLabel?.text = videoList.videoDescriptionOfIndex(row)
+        
+        cell.thumbnailView?.contentMode = UIViewContentMode.ScaleAspectFill
+//        cell.thumbnailView?.image = UIImage(named: "grey")
+        
+        let url = NSURL(string: videoList.videoThumbnailOfIndex(row))
+        let request: NSURLRequest = NSURLRequest(URL: url!)
+        let urlConnection: NSURLConnection = NSURLConnection(request: request, delegate: self)!
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+            if error == nil {
+                let img: UIImage? = UIImage(data: data)
+                if img != nil {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        cell.thumbnailView?.image = img!
+                    })
+                }
+            }
+        })
         return cell
     }
 }

@@ -17,10 +17,12 @@ private class VideoItem  {
     var thumbnail = ""
     var videoId = ""
     var title = ""
-    init(thumbnail th: String, videoId id: String, title ti: String) {
+    var description = ""
+    init(thumbnail th: String, videoId id: String, title ti: String, description de: String) {
         thumbnail = th
         videoId = id
         title = ti
+        description = de
     }
 }
 
@@ -54,23 +56,40 @@ class VideoList {
         return v.videoId
     }
     
+    func videoThumbnailOfIndex(index: Int) -> String {
+        if !isValidIndex(index) {
+            return ""
+        }
+        let v = videos[index]
+        return v.thumbnail
+    }
+    
+    func videoDescriptionOfIndex(index: Int) -> String {
+        if !isValidIndex(index) {
+            return ""
+        }
+        let v = videos[index]
+        return v.description
+    }
+    
     func reloadVideosFromJson(jsonObject: NSDictionary) {
         videos = []
         if let rawItems = jsonObject["items"] as? [NSDictionary] {
             for rawItem: NSDictionary in rawItems {
-                let th = (((rawItem["snippet"] as? NSDictionary)?["thumbnails"] as? NSDictionary)?["default"] as? NSDictionary)?["url"] as? String
+                let thumbnail = (((rawItem["snippet"] as? NSDictionary)?["thumbnails"] as? NSDictionary)?["medium"] as? NSDictionary)?["url"] as? String
                 let id = (rawItem["id"] as? NSDictionary)?["videoId"] as? String
-                let ti = (rawItem["snippet"] as? NSDictionary)?["title"] as? String
-                if th != nil && id != nil && ti != nil {
-                    videos.append(VideoItem(thumbnail: th!, videoId: id!, title: ti!))
+                let title = (rawItem["snippet"] as? NSDictionary)?["title"] as? String
+                let description = (rawItem["snippet"] as? NSDictionary)?["description"] as? String
+                if thumbnail != nil && id != nil && title != nil && description != nil {
+                    videos.append(VideoItem(thumbnail: thumbnail!, videoId: id!, title: title!, description: description!))
                 }
             }
         }
     }
     
-    func requestDataForRefresh() {
+    func requestDataForRefresh(query: String) {
         let api =  DataApi.sharedInstance
-        api.getList({(data: NSDictionary) -> Void in
+        api.getList(query, success: {(data: NSDictionary) -> Void in
             self.reloadVideosFromJson(data)
             self.delegate?.didReloadVideoData()
         })
