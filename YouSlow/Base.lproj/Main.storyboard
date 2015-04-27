@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -19,22 +20,49 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xKW-Hg-qVt" customClass="YTPlayerView" customModule="YouSlow" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="64" width="414" height="306"/>
+                                <rect key="frame" x="0.0" y="64" width="414" height="311"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="xKW-Hg-qVt" secondAttribute="height" multiplier="4:3" id="fHH-Ji-UGF"/>
+                                </constraints>
                                 <variation key="heightClass=compact-widthClass=regular" ambiguous="YES">
                                     <rect key="frame" x="0.0" y="64" width="736" height="0.0"/>
                                 </variation>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Video Quality" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XdA-3I-dr6">
+                                <rect key="frame" x="0.0" y="439" width="414" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="qV2-kt-daJ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Video State" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pKZ-bV-gqh">
+                                <rect key="frame" x="0.0" y="526" width="414" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="Rs0-En-GY8"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="pKZ-bV-gqh" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="-16" id="5wa-pW-tgd"/>
                             <constraint firstItem="xKW-Hg-qVt" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" id="98g-iZ-bm3"/>
-                            <constraint firstAttribute="bottom" secondItem="xKW-Hg-qVt" secondAttribute="bottom" constant="366" id="D6Y-LG-Pi4"/>
+                            <constraint firstItem="pKZ-bV-gqh" firstAttribute="width" secondItem="tsR-hK-woN" secondAttribute="width" id="E6Y-UY-Zwb"/>
                             <constraint firstAttribute="trailing" secondItem="xKW-Hg-qVt" secondAttribute="trailing" id="MdQ-FZ-Sws"/>
+                            <constraint firstItem="XdA-3I-dr6" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="-16" id="PWy-uT-qaE"/>
                             <constraint firstAttribute="width" secondItem="xKW-Hg-qVt" secondAttribute="width" id="hmW-7N-vFm"/>
+                            <constraint firstItem="XdA-3I-dr6" firstAttribute="top" secondItem="xKW-Hg-qVt" secondAttribute="bottom" constant="64" id="hxA-3y-PdS"/>
                             <constraint firstAttribute="centerX" secondItem="xKW-Hg-qVt" secondAttribute="centerX" id="nFp-Rr-ba7"/>
+                            <constraint firstItem="pKZ-bV-gqh" firstAttribute="top" secondItem="XdA-3I-dr6" secondAttribute="bottom" constant="66" id="oKB-SE-KGE"/>
+                            <constraint firstAttribute="width" secondItem="XdA-3I-dr6" secondAttribute="width" id="pRR-Du-54d"/>
                             <constraint firstItem="xKW-Hg-qVt" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="-16" id="vT4-Ja-xkL"/>
                             <constraint firstItem="xKW-Hg-qVt" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" id="wlI-d7-h8A"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="xKW-Hg-qVt" secondAttribute="trailing" constant="-16" id="xor-1L-6SQ"/>
                             <constraint firstAttribute="width" secondItem="xKW-Hg-qVt" secondAttribute="width" id="yGH-D6-iTa"/>
                             <constraint firstItem="xKW-Hg-qVt" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" constant="47" id="zzB-gg-aP3"/>
                         </constraints>
@@ -42,6 +70,7 @@
                             <mask key="constraints">
                                 <exclude reference="98g-iZ-bm3"/>
                                 <exclude reference="MdQ-FZ-Sws"/>
+                                <exclude reference="hmW-7N-vFm"/>
                                 <exclude reference="nFp-Rr-ba7"/>
                                 <exclude reference="yGH-D6-iTa"/>
                                 <exclude reference="zzB-gg-aP3"/>
@@ -51,6 +80,8 @@
                     <tabBarItem key="tabBarItem" title="Single Video" image="first" selectedImage="first" id="acW-dT-cKf"/>
                     <connections>
                         <outlet property="playerView" destination="xKW-Hg-qVt" id="ZUX-GB-Iup"/>
+                        <outlet property="videoQualityLabel" destination="XdA-3I-dr6" id="Wzy-Ev-ogq"/>
+                        <outlet property="videoStateLabel" destination="pKZ-bV-gqh" id="rKu-78-Mt3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
@@ -149,20 +180,21 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="zK4-fG-fYJ">
-                                <rect key="frame" x="120" y="38" width="174" height="29"/>
+                                <rect key="frame" x="22" y="38" width="370" height="29"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="28" id="LW6-y2-PH4"/>
-                                    <constraint firstAttribute="width" constant="174" id="XZh-OK-ROu"/>
+                                    <constraint firstAttribute="width" constant="370" id="XZh-OK-ROu"/>
                                 </constraints>
                                 <segments>
-                                    <segment title="One Week"/>
-                                    <segment title="One Month"/>
+                                    <segment title="WiFi (Columbia)"/>
+                                    <segment title="WiFi (TWC)"/>
+                                    <segment title="4G (AT&amp;T)"/>
                                 </segments>
                                 <connections>
                                     <action selector="scopeChanged:" destination="oAf-WQ-N59" eventType="valueChanged" id="5ng-xM-bGK"/>
                                 </connections>
                             </segmentedControl>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Average Rebuffering Ratio(%)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FIz-ke-kuv">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Average Rebuffering Ratio (%)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FIz-ke-kuv">
                                 <rect key="frame" x="16" y="84" width="382" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

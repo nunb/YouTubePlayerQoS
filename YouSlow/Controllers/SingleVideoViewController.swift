@@ -8,8 +8,10 @@
 import Foundation
 import UIKit
 
-class SingleVideoViewController: UIViewController {
+class SingleVideoViewController: UIViewController, MeasurementsDelegate{
 
+    @IBOutlet var videoQualityLabel: UILabel!
+    @IBOutlet var videoStateLabel: UILabel!
     @IBOutlet var playerView: YTPlayerView!
 //    var playerView: YTPlayerView
     var measurements = Measurements()
@@ -17,10 +19,11 @@ class SingleVideoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let width = self.view.frame.width;
-        let height = width * 3 / 4;
+//        let width = self.view.frame.width;
+//        let height = width * 3 / 4;
         playerView.loadPlayerWithOptions(videoId)
         playerView.delegate = measurements
+        measurements.delegate = self
         self.automaticallyAdjustsScrollViewInsets = false
 
     }
@@ -31,12 +34,18 @@ class SingleVideoViewController: UIViewController {
     }
     override func viewWillDisappear(animated: Bool) {
         if let fraction = playerView.getVideoLoadedFraction() {
-            measurements.endMeasuring(fraction)
-            measurements.reportMeasurements()
+//            measurements.endMeasuring(fraction)
+//            measurements.reportMeasurements()
         }
         
         playerView.removeWebView()
 
+    }
+    func didChangeToQuality(quality: String) {
+        videoQualityLabel.text = "Video Quality: \(quality)"
+    }
+    func didChangeToState(state: String) {
+        videoStateLabel.text = "Video State: \(state)"
     }
 }
 

@@ -25,14 +25,15 @@ class DataApi {
     }
     
     func getList(query: String, success: NSDictionary -> Void) {
-        get("\(host)search?part=snippet&q=\(query)&maxResults=10&key=\(apiKey)", success: success)
+        let newQuery = query.stringByReplacingOccurrencesOfString(" ", withString: "%20", options: NSStringCompareOptions.allZeros, range: nil)
+        get("\(host)search?part=snippet&q=\(newQuery)&maxResults=10&key=\(apiKey)", success: success)
     }
     
     func getNetworkInfo(success: NSDictionary -> Void, fail: NSError -> Void) {
         get("http://ip-api.com/json/", success: success, fail: fail)
     }
     
-    func postYouSlow(data: [String: String], success: NSDictionary -> Void) {
+    func postYouSlow(data: [String: String], success: (NSDictionary -> Void)?) {
         var req = ""
 //        let time = NSDate()
 //        let format = NSDateFormatter()
@@ -48,7 +49,7 @@ class DataApi {
         get("https://dyswis.cs.columbia.edu/youslow/dbupdatesecured9.php?\(req)", success: success)
     }
     
-    private func get(path: String, success: (NSDictionary) -> Void, fail: ((NSError) -> Void)? = nil) {
+    private func get(path: String, success: (NSDictionary -> Void)?, fail: ((NSError) -> Void)? = nil) {
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
@@ -73,7 +74,7 @@ class DataApi {
             }
         
             if let json = jsonObject as? NSDictionary  {
-                success(json)
+                success?(json)
                 return
             }
         })

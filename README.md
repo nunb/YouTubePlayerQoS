@@ -30,4 +30,7 @@ References
 
 -	YouSlow Project: https://dyswis.cs.columbia.edu/youslow/
 -	YouSlow Chrome extension: https://chrome.google.com/webstore/detail/youtube-too-slow-youslow/agpnjngphbdlfoeoglcamjgabcocpobi
--	API used: https://developers.google.com/youtube
+-	YouTube Data API: https://developers.google.com/youtube/v3/
+-	YouTube iFrame API: https://developers.google.com/youtube/iframe_api_reference
+-	PNChart: https://github.com/kevinzhow/PNChart
+-	YouTubeView: https://github.com/to0/YouTubeView

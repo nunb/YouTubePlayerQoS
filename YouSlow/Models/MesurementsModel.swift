@@ -7,7 +7,11 @@
 //
 
 import Foundation
-
+protocol MeasurementsDelegate {
+//    func didGetAllQualities(result: String)
+    func didChangeToState(state: String)
+    func didChangeToQuality(quality: String)
+}
 class Measurements: YTPlayerDelegate{
     private var location = Location()
     private let qos = QualityOfService()
@@ -16,6 +20,7 @@ class Measurements: YTPlayerDelegate{
     private var lastState = YTPlayerState.Unstarted
     private var reportToken = dispatch_once_t()
     private var startToken = dispatch_once_t()
+    var delegate: MeasurementsDelegate?
     func startMeasuring() {
         startTime = NSDate()
     }
@@ -64,9 +69,7 @@ class Measurements: YTPlayerDelegate{
             report["version"] = "iOS1.0"
             
             
-            DataApi.sharedInstance.postYouSlow(report, success: {
-                (res: NSDictionary) in
-            })
+            DataApi.sharedInstance.postYouSlow(report, success: nil)
         })
     }
     // Delegates
@@ -78,6 +81,7 @@ class Measurements: YTPlayerDelegate{
         qos.timeLength = playerView.getVideoDuration()!
     }
     func playerDidChangeToState(playerView: YTPlayerView, state: YTPlayerState) {
+        delegate?.didChangeToState(state.rawValue)
         if state != YTPlayerState.Unstarted {
             dispatch_once(&startToken, {
                 [weak self] in
@@ -109,6 +113,7 @@ class Measurements: YTPlayerDelegate{
         }
     }
     func playerDidChangeToQuality(playerView: YTPlayerView, quality: YTPlayerQuality) {
+        delegate?.didChangeToQuality(quality.rawValue)
         if startTime == nil {
             return
         }
