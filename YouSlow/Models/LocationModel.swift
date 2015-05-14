@@ -8,6 +8,11 @@
 import UIKit
 import CoreLocation
 
+protocol LocationDelegate {
+    func didGetLocation(location: String)
+    func didGetIsp(isp: String)
+}
+
 class Location: NSObject, CLLocationManagerDelegate {
     var coordinates: String?
     var country: String?
@@ -18,6 +23,7 @@ class Location: NSObject, CLLocationManagerDelegate {
     var currentLocation: CLLocation?
     var geoCoderToken = dispatch_once_t()
     var org: String?
+    var delegate: LocationDelegate?
 
     override init() {
         super.init()
@@ -31,7 +37,6 @@ class Location: NSObject, CLLocationManagerDelegate {
                 locationManager.requestWhenInUseAuthorization()
             }
         }
-        //        locationManager.startUpdatingLocation()
     }
     
     var isReady: Bool {
@@ -47,6 +52,9 @@ class Location: NSObject, CLLocationManagerDelegate {
         if let org = res["org"] as? String {
             self.org = org.stringByReplacingOccurrencesOfString(" ", withString: "", options: NSStringCompareOptions.allZeros, range: nil)
             println("ISP: \(self.org!)")
+            dispatch_async(dispatch_get_main_queue(), {
+                self.delegate?.didGetIsp(self.org!)
+            })
         }
     }
     private func failHandler(err: NSError) {
@@ -64,6 +72,7 @@ class Location: NSObject, CLLocationManagerDelegate {
             println("City: \(city!)")
             println("Region: \(region!)")
             println("Loc: \(coordinates!)")
+            delegate?.didGetLocation("\(coordinates!)")
         }
     }
     // Delegates

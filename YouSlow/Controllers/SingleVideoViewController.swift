@@ -10,20 +10,14 @@ import UIKit
 
 class SingleVideoViewController: UIViewController, MeasurementsDelegate{
 
-    @IBOutlet var videoQualityLabel: UILabel!
-    @IBOutlet var videoStateLabel: UILabel!
     @IBOutlet var playerView: YTPlayerView!
-//    var playerView: YTPlayerView
     var measurements = Measurements()
     var videoId = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let width = self.view.frame.width;
-//        let height = width * 3 / 4;
         playerView.loadPlayerWithOptions(videoId)
         playerView.delegate = measurements
-        measurements.delegate = self
         self.automaticallyAdjustsScrollViewInsets = false
 
     }
@@ -34,18 +28,25 @@ class SingleVideoViewController: UIViewController, MeasurementsDelegate{
     }
     override func viewWillDisappear(animated: Bool) {
         if let fraction = playerView.getVideoLoadedFraction() {
-//            measurements.endMeasuring(fraction)
-//            measurements.reportMeasurements()
+            measurements.endMeasuring(fraction)
+            measurements.reportMeasurements()
         }
-        
         playerView.removeWebView()
-
+    }
+    func didChangeIsp(isp: String) {
+//        ispLabel.text = "ISP: \(isp)"
+    }
+    func didChangeBuffering(bufferings: String) {
+//        bufferingLabel.text = "Number of Rebufferings: \(bufferings)"
     }
     func didChangeToQuality(quality: String) {
-        videoQualityLabel.text = "Video Quality: \(quality)"
+//        videoQualityLabel.text = "Video Quality: \(quality)"
     }
     func didChangeToState(state: String) {
-        videoStateLabel.text = "Video State: \(state)"
+//        videoStateLabel.text = "Video State: \(state)"
+    }
+    func didChangeLocation(location: String) {
+//        locationLabel.text = "Location: \(location)"
     }
 }
 

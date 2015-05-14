@@ -20,7 +20,7 @@ class VideoTableViewController: UITableViewController, UISearchBarDelegate, Vide
         videoSearchBar.delegate = self
         self.videoDataSource.videoList.delegate = self
 
-        self.videoDataSource.videoList.requestDataForRefresh("hi")
+        self.videoDataSource.videoList.requestDataForRefresh("Grumpy cat")
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false

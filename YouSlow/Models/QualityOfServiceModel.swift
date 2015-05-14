@@ -8,10 +8,15 @@
 
 import Foundation
 
+protocol QualityDelegate {
+    func didEndBufferings(bufferings: String)
+}
+
 class QualityOfService {
     var numOfBufferings = 0
     var durationOfBufferings = 0
     var resolutionChanges = 0
+    var delegate: QualityDelegate?
 
     private var bufferingTimes = [Int]()
     private var bufferingIntervals = [Int]()
@@ -79,6 +84,8 @@ class QualityOfService {
         bufferingTimes.append(lastBuffering)
         bufferingIntervals.append(interval)
         numOfBufferings += 1
+        delegate?.didEndBufferings("\(numOfBufferings)")
+
         durationOfBufferings += interval
     }
 }

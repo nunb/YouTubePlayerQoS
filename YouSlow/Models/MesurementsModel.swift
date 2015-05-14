@@ -7,12 +7,17 @@
 //
 
 import Foundation
+import CoreData
+
 protocol MeasurementsDelegate {
 //    func didGetAllQualities(result: String)
     func didChangeToState(state: String)
     func didChangeToQuality(quality: String)
+    func didChangeLocation(location: String)
+    func didChangeBuffering(bufferings: String)
+    func didChangeIsp(isp: String)
 }
-class Measurements: YTPlayerDelegate{
+class Measurements: YTPlayerDelegate, LocationDelegate, QualityDelegate{
     private var location = Location()
     private let qos = QualityOfService()
     private var token = dispatch_once_t()
@@ -20,7 +25,25 @@ class Measurements: YTPlayerDelegate{
     private var lastState = YTPlayerState.Unstarted
     private var reportToken = dispatch_once_t()
     private var startToken = dispatch_once_t()
+    let format = NSDateFormatter()
+    
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+
     var delegate: MeasurementsDelegate?
+    
+    init() {
+        location.delegate = self
+        qos.delegate = self
+    }
+    func didEndBufferings(bufferings: String) {
+        delegate?.didChangeBuffering(bufferings)
+    }
+    func didGetLocation(location: String) {
+        delegate?.didChangeLocation(location)
+    }
+    func didGetIsp(isp: String) {
+        delegate?.didChangeIsp(isp)
+    }
     func startMeasuring() {
         startTime = NSDate()
     }
@@ -29,45 +52,50 @@ class Measurements: YTPlayerDelegate{
     }
     func reportMeasurements() {
         dispatch_once(&reportToken, {
-            [weak self] in
-            if self == nil {
-                return
+            [unowned self] in
+
+            if self.lastState == YTPlayerState.Ended {
+                self.qos.abandonment = "0"
             }
-            if self!.lastState == YTPlayerState.Ended {
-                self!.qos.abandonment = "0"
-            }
-            else if self?.lastState == YTPlayerState.Buffering {
-                self!.qos.abandonment = "1"
+            else if self.lastState == YTPlayerState.Buffering {
+                self.qos.abandonment = "1"
             }
             else {
-                self!.qos.abandonment = "2"
+                self.qos.abandonment = "2"
             }
             var report = [String: String]()
 
             let time = NSDate()
-            let format = NSDateFormatter()
-            format.dateFormat = "yyyy-MM-dd%20HH:mm:ss"
-            format.stringFromDate(time)
-            report["localtime"] = format.stringFromDate(time)
+            self.format.dateFormat = "yyyy-MM-dd%20HH:mm:ss"
+            self.format.stringFromDate(time)
+            report["localtime"] = self.format.stringFromDate(time)
             report["hostname"] = "none"
-            report["city"] = self!.location.city!
-            report["region"] = self!.location.region!
-            report["country"] = self!.location.country!
-            report["loc"] = self!.location.coordinates!
-            report["org"] = self!.location.org
-            report["numofrebufferings"] = "\(self!.qos.numOfBufferings)"
-            report["bufferduration"] = "\(self!.qos.durationOfBufferings)"
-            report["bufferdurationwithtime"] = self!.qos.bufferingsWithTime
-            report["resolutionchanges"] = "\(self!.qos.resolutionChanges)"
-            report["requestedresolutions"] = self!.qos.requestedResolutions
-            report["requestedresolutionswithtime"] = self!.qos.requestedResolutionsWithTime
-            report["timelength"] = "\(self!.qos.timeLength)"
-            report["abandonment"] = "\(self!.qos.abandonment):\(self!.qos.loadedFraction)"
-            report["allquality"] = self!.qos.availableQualities
+            report["city"] = self.location.city!
+            report["region"] = self.location.region!
+            report["country"] = self.location.country!
+            report["loc"] = self.location.coordinates!
+            report["org"] = self.location.org
+            report["numofrebufferings"] = "\(self.qos.numOfBufferings)"
+            report["bufferduration"] = "\(self.qos.durationOfBufferings)"
+            report["bufferdurationwithtime"] = self.qos.bufferingsWithTime
+            report["resolutionchanges"] = "\(self.qos.resolutionChanges)"
+            report["requestedresolutions"] = self.qos.requestedResolutions
+            report["requestedresolutionswithtime"] = self.qos.requestedResolutionsWithTime
+            report["timelength"] = "\(self.qos.timeLength)"
+            report["abandonment"] = "\(self.qos.abandonment):\(self.qos.loadedFraction)"
+            report["allquality"] = self.qos.availableQualities
             report["initialbufferingtime"] = "125"
             report["avglatency"] = "234"
             report["version"] = "iOS1.0"
             
+            let managedContext = self.appDelegate.managedObjectContext!
+            var error: NSError?
+            let newItem = NSEntityDescription.insertNewObjectForEntityForName("Measurement", inManagedObjectContext: managedContext) as! NSManagedObject
+            newItem.setValue(report["localtime"], forKey: "localtime")
+            newItem.setValue(report["loc"], forKey: "loc")
+            newItem.setValue(report["numofrebufferings"], forKey: "numofrebufferings")
+            newItem.setValue(report["requestedresolutions"], forKey: "requestedresolutions")
+            managedContext.save(&error)
             
             DataApi.sharedInstance.postYouSlow(report, success: nil)
         })
@@ -81,14 +109,17 @@ class Measurements: YTPlayerDelegate{
         qos.timeLength = playerView.getVideoDuration()!
     }
     func playerDidChangeToState(playerView: YTPlayerView, state: YTPlayerState) {
-        delegate?.didChangeToState(state.rawValue)
         if state != YTPlayerState.Unstarted {
+
             dispatch_once(&startToken, {
                 [weak self] in
                 self?.startMeasuring()
             })
+            delegate?.didChangeToState("Unstarted")
         }
         if state == YTPlayerState.Buffering {
+            delegate?.didChangeToState("Rebuffering")
+
             if startTime == nil {
                 return
             }
@@ -98,6 +129,8 @@ class Measurements: YTPlayerDelegate{
             }
         }
         else if state == YTPlayerState.Playing {
+            delegate?.didChangeToState("Playing")
+
             if startTime == nil {
                 return
             }
@@ -109,7 +142,11 @@ class Measurements: YTPlayerDelegate{
         lastState = state
         qos.availableQualities = playerView.getAvailableQualityLevelsString()!
         if state == YTPlayerState.Ended {
-            reportMeasurements()
+            delegate?.didChangeToState("Ended")
+//            reportMeasurements()
+        }
+        if state == YTPlayerState.Paused {
+            delegate?.didChangeToState("Paused")
         }
     }
     func playerDidChangeToQuality(playerView: YTPlayerView, quality: YTPlayerQuality) {
